@@ -95,10 +95,10 @@ class TrainManager(object):
         ], lr=cfg.TRAIN_PROP_LR, weight_decay=cfg.TRAIN_PROP_WEIGHT_DECAY)
 
         print('dataset processing...')
-        train_dataset = KiTS19_Train_Prop(preprocessed_data_path=cfg.DATA_ROOT, transform={"flip":0, "crop":0}, train_sample_list=cfg.DATA_TRAIN_LIST, 
+        train_dataset = Train_Prop(preprocessed_data_path=cfg.DATA_ROOT, transform={"flip":0, "crop":0}, train_sample_list=cfg.DATA_TRAIN_LIST, 
                                         object=cfg.TRAIN_OBJECT, data_info_file=cfg.DATA_INFO_FILE)
                 
-        test_dataset = KiTS19_Train_Prop(preprocessed_data_path=cfg.DATA_ROOT, transform={"flip":0, "crop":0}, train_sample_list=cfg.DATA_TEST_LIST, 
+        test_dataset = Train_Prop(preprocessed_data_path=cfg.DATA_ROOT, transform={"flip":0, "crop":0}, train_sample_list=cfg.DATA_TEST_LIST, 
                                         object=cfg.TRAIN_OBJECT, data_info_file=cfg.DATA_INFO_FILE)
         
         train_volume_num = len(train_dataset.train_id_list)
