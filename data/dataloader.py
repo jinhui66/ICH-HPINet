@@ -27,12 +27,12 @@ class Train_Prop(Dataset):
     training dataloader for propagation model
     """
     def __init__(self,phase='train',
-                preprocessed_data_path="/mnts2d/med_data1/lyshi/KiTS_nnUNet_preprocessed/",# preoricessed data path
-                patch_data_path = "/mntnfs/med_data2/shiluyue/InteractiveCTSeg/dataset/KiTS_Organ_3D_Patch",
+                preprocessed_data_path="",# preoricessed data path
+                patch_data_path = "",
                 transform={"flip":0.5, "crop":0.5},
-                train_sample_list = "./data/public_train.txt", # list contrains case IDs or string (path to txt file), case IDs for training
+                train_sample_list = "./data/train.txt", # list contrains case IDs or string (path to txt file), case IDs for training
                 object = "organ", # 1 or 2, choose organ or tumer as the target object
-                data_info_file = "/data/lyshi/datasets/nnUNet_data/nnUnet_preprocessed/Task050_KiTS/nnUNetData_plans_v2.1_2D_stage0/data_info.json",
+                data_info_file = "",
                 patch_out_size = 80
                 ):
         self.phase=phase
