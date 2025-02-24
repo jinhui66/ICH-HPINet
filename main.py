@@ -1,6 +1,6 @@
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "2"
-# os.environ['TORCH_HOME'] = './pretrained-model'
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ['TORCH_HOME'] = './pretrained-model'
 
 from multiprocessing.dummy import freeze_support
 import time
@@ -19,14 +19,14 @@ from networks.deepLabV3.modeling import deeplabv3_resnet50, deeplabv3_resnet101,
 from networks.STCN.prop_net import PropagationNetwork, Converter
 from networks.unet3d.model import ResidualUNet3D
 
-from networks.iMIS import iMIS
+from networks.HPI import HPI
 import torch.optim as optim
 from davisinteractive.robot.interactive_robot import InteractiveScribblesRobot
 from PIL import Image
 from torch.utils.data import DataLoader
 
 import torchvision.transforms as tr
-from data.dataloader import Train_Prop
+from data.dataloader import ich_Dataset
 from networks.loss import Added_BCEWithLogitsLoss, Added_CrossEntropyLoss, DC_and_topk_loss
 from utils import AverageMeter, RandomIdentitySampler, PropagationRandomSampler
 from collections import defaultdict
@@ -56,49 +56,39 @@ class TrainManager(object):
             f.write("converter model: " + "\n" + cfg.PRETRAINED_MODEL_CONVERT + "\n\n")
 
         self.seg3d_model = ResidualUNet3D(in_channels=4, out_channels=1, is_segmentation=False, layer_order="bcr").to(device)
-        self.interaction_model = deeplabv3_resnet50(num_classes=1, output_stride=16, pretrained_backbone=False).to(device)
+        self.seg2d_model = deeplabv3_resnet50(num_classes=1, output_stride=16, pretrained_backbone=False).to(device)
         self.propagation_model = PropagationNetwork().to(device)
         self.f3d_converter = Converter().to(device)
         self.use_gpu=use_gpu
         
 
-        self.iMIS = iMIS(
+        self.HPI = HPI(
             seg3d_model = self.seg3d_model, 
-            int_model = self.interaction_model, 
+            seg2d_model = self.seg2d_model, 
             prop_model = self.propagation_model,
             f3d_converter = self.f3d_converter 
         )
         
-
-#######################################
-##                                   ##
-##                                   ##
-##      Train Propagation Model      ##
-##                                   ##
-##                                   ##
-#######################################
     def train_propagation(self, freeze_params, start_epo=1, loss_func='dice_topk'): #freeze_params=["int3d", "converter", "prop_encoder"]
 
         
-        loss_types = ["loss_convert", "loss_convert_ce", "loss_convert_dc", "loss_prop", "loss_prop_ce", "loss_prop_dc", "loss_total", "loss_3d"] 
+        loss_types = ["loss_convert", "loss_prop", "loss_total", "loss_3d"] 
         running_loss = {}
         for k in loss_types:
             running_loss[k] = AverageMeter()
         
         self.optimizer = optim.Adam([
-            {"params":filter(lambda p: p.requires_grad, self.iMIS.prop_model.parameters())},
-            {"params":filter(lambda p: p.requires_grad, self.iMIS.f3d_converter.parameters()), 
-                "lr":cfg.TRAIN_CONVERT_LR if cfg.TRAIN_CONVERT_LR is not None else cfg.TRAIN_PROP_LR},
-            {"params":filter(lambda p: p.requires_grad, self.iMIS.seg3d_model.parameters()), 
-                "lr":cfg.TRAIN_SEG3D_LR if cfg.TRAIN_SEG3D_LR is not None else cfg.TRAIN_PROP_LR},
-            {"params":filter(lambda p: p.requires_grad, self.iMIS.int_model.parameters())}
+            {"params":filter(lambda p: p.requires_grad, self.HPI.prop_model.parameters())},
+            {"params":filter(lambda p: p.requires_grad, self.HPI.f3d_converter.parameters())}, 
+            {"params":filter(lambda p: p.requires_grad, self.HPI.seg3d_model.parameters())}, 
+            {"params":filter(lambda p: p.requires_grad, self.HPI.seg2d_model.parameters())}
         ], lr=cfg.TRAIN_PROP_LR, weight_decay=cfg.TRAIN_PROP_WEIGHT_DECAY)
 
         print('dataset processing...')
-        train_dataset = Train_Prop(preprocessed_data_path=cfg.DATA_ROOT, transform={"flip":0, "crop":0}, train_sample_list=cfg.DATA_TRAIN_LIST, 
+        train_dataset = ich_Dataset(preprocessed_data_path=cfg.DATA_ROOT, transform={"flip":0, "crop":0}, train_sample_list=cfg.DATA_TRAIN_LIST, 
                                         object=cfg.TRAIN_OBJECT, data_info_file=cfg.DATA_INFO_FILE)
                 
-        test_dataset = Train_Prop(preprocessed_data_path=cfg.DATA_ROOT, transform={"flip":0, "crop":0}, train_sample_list=cfg.DATA_TEST_LIST, 
+        test_dataset = ich_Dataset(preprocessed_data_path=cfg.DATA_ROOT, transform={"flip":0, "crop":0}, train_sample_list=cfg.DATA_TEST_LIST, 
                                         object=cfg.TRAIN_OBJECT, data_info_file=cfg.DATA_INFO_FILE)
         
         train_volume_num = len(train_dataset.train_id_list)
@@ -144,10 +134,10 @@ class TrainManager(object):
             for k in loss_types:
                 running_loss[k].reset()
 
-            self.iMIS.prop_model.train()
-            self.iMIS.f3d_converter.train()
-            self.iMIS.seg3d_model.train()
-            self.iMIS.int_model.train()
+            self.HPI.prop_model.train()
+            self.HPI.f3d_converter.train()
+            self.HPI.seg3d_model.train()
+            self.HPI.seg2d_model.train()
 
             for ii, sample in enumerate(trainloader):
                 if ii >= train_volume_num:
@@ -155,6 +145,7 @@ class TrainManager(object):
                 start_slice = sample["start_slice"].float()
                 start_slice_mask = sample["start_slice_mask"].float()
                 slice_scribble = sample["slice_scribble"].float()
+                slice_prev_mask = sample['slice_prev_mask'].float()
                 slice_1 = sample["slice_1"].float()
                 slice_1_mask = sample["slice_1_mask"].float()
                 slice_2 = sample["slice_2"].float()
@@ -177,6 +168,7 @@ class TrainManager(object):
                     start_slice = start_slice.to(device)
                     start_slice_mask = start_slice_mask.to(device)
                     slice_scribble = slice_scribble.to(device)
+                    slice_prev_mask = slice_prev_mask.to(device)
                     slice_1 = slice_1.to(device)
                     slice_1_mask = slice_1_mask.to(device)
                     slice_2 = slice_2.to(device)
@@ -186,21 +178,21 @@ class TrainManager(object):
                     prev_round_mask = prev_round_mask.to(device)
                     scribble_mask = scribble_mask.to(device)
 
-                self.iMIS.volume_patch = volume_patch
-                self.iMIS.pred_patch_mask = prev_round_mask
-                self.iMIS.crop_info = crop_info
+                self.HPI.volume_patch = volume_patch
+                self.HPI.pred_patch_mask = prev_round_mask
+                self.HPI.crop_info = crop_info
                 
                 if "int3d" in freeze_params:
                     with torch.no_grad():
-                        _ = self.iMIS.run_3d_model(scribble_mask, crop_first=False)
+                        _ = self.HPI.run_3d_model(scribble_mask, crop_first=False)
                     loss_3d = 0
                 else:
-                    pred_patch_mask = self.iMIS.run_3d_model(scribble_mask, crop_first=False)
+                    pred_patch_mask = self.HPI.run_3d_model(scribble_mask, crop_first=False)
                     _, _, loss_3d = criterion(net_output=pred_patch_mask, target=mask_patch)
 
                 # print(slice_idx[0][0])
-                # print(start_slice.shape, slice_scribble.shape,prev_round_mask[:,:, slice_idx[0][0]].shape,slice_idx)
-                pred_slice_mask = self.iMIS.run_int_model(start_slice, slice_scribble, prev_round_mask[:,:, slice_idx[0][0]], case_ID = caseID, slice_idx=slice_idx)
+                # print(start_slice.shape, slice_scribble.shape,slice_prev_mask.shape,slice_idx)
+                pred_slice_mask = self.HPI.run_2d_model(start_slice, slice_scribble, slice_prev_mask, case_ID = caseID, slice_idx=slice_idx)
                 # print(pred_slice_mask.shape, start_slice_mask.shape)
                 loss_convert, loss_convert_ce, loss_convert_dc = 0,0,0
                 f_3d_dict = [defaultdict(list), defaultdict(list)]
@@ -209,7 +201,7 @@ class TrainManager(object):
                 convert_preds = [defaultdict(list), defaultdict(list)]
                 for i in range(bs):
                     for j in range(2):
-                        f_3d, preds = self.iMIS.decode_3d_feature(slice_idx[j+1][i], pred=True)
+                        f_3d, preds = self.HPI.decode_3d_feature(slice_idx[j+1][i], pred=True)
                         for k in f_3d.keys():
                             f_3d_dict[j][k].append(f_3d[k])
                             if k in preds.keys():
@@ -228,9 +220,9 @@ class TrainManager(object):
                 loss_convert_ce /= 4
                 loss_convert_dc /= 4
 
-                pred_slice_1_mask, _ = self.iMIS.run_prop_model(target_image=slice_1, f_3d=f_3d_dict[0], \
+                pred_slice_1_mask, _ = self.HPI.run_prop_model(target_image=slice_1, f_3d=f_3d_dict[0], \
                     segmented_images=start_slice, segmented_masks=pred_slice_mask, clear=True)
-                pred_slice_2_mask, _ = self.iMIS.run_prop_model(target_image=slice_2, f_3d=f_3d_dict[1], \
+                pred_slice_2_mask, _ = self.HPI.run_prop_model(target_image=slice_2, f_3d=f_3d_dict[1], \
                     segmented_images=slice_1, segmented_masks=pred_slice_1_mask, clear=True)
 
                 loss_0, ce_loss_0, dc_loss_0 = criterion(net_output=pred_slice_mask,target=start_slice_mask)
@@ -280,8 +272,8 @@ class TrainManager(object):
                     mae_score.update(slice_2_mae, 1)
 
                     # 计算Hausdorff距离
-                    hd_1 = HD(slice_1_mask[b].cpu(), pred_slice_1_mask[b].cpu())
-                    hd_2 = HD(slice_2_mask[b].cpu(), pred_slice_2_mask[b].cpu())
+                    hd_1 = HD(slice_1_mask[b][0].cpu(), pred_slice_1_mask[b][0].cpu())
+                    hd_2 = HD(slice_2_mask[b][0].cpu(), pred_slice_2_mask[b][0].cpu())
                     # print(hd_1, hd_2)
                     if not math.isinf(hd_1):
                         hd_score.update(hd_1, 1)
@@ -308,16 +300,17 @@ class TrainManager(object):
             for k in loss_types:
                 running_loss[k].reset()
 
-            self.iMIS.prop_model.eval()
-            self.iMIS.f3d_converter.eval()
-            self.iMIS.seg3d_model.eval()
-            self.iMIS.int_model.eval()
+            self.HPI.prop_model.eval()
+            self.HPI.f3d_converter.eval()
+            self.HPI.seg3d_model.eval()
+            self.HPI.seg2d_model.eval()
             
             with torch.no_grad():
                 for ii, sample in enumerate(testloader):
                     start_slice = sample["start_slice"].float()
                     start_slice_mask = sample["start_slice_mask"].float()
                     slice_scribble = sample["slice_scribble"].float()
+                    slice_prev_mask = sample['slice_prev_mask'].float()
                     slice_1 = sample["slice_1"].float()
                     slice_1_mask = sample["slice_1_mask"].float()
                     slice_2 = sample["slice_2"].float()
@@ -340,6 +333,7 @@ class TrainManager(object):
                         start_slice = start_slice.to(device)
                         start_slice_mask = start_slice_mask.to(device)
                         slice_scribble = slice_scribble.to(device)
+                        slice_prev_mask = slice_prev_mask.to(device)
                         slice_1 = slice_1.to(device)
                         slice_1_mask = slice_1_mask.to(device)
                         slice_2 = slice_2.to(device)
@@ -349,30 +343,23 @@ class TrainManager(object):
                         prev_round_mask = prev_round_mask.to(device)
                         scribble_mask = scribble_mask.to(device)
 
-                    self.iMIS.volume_patch = volume_patch
-                    self.iMIS.pred_patch_mask = prev_round_mask
-                    self.iMIS.crop_info = crop_info
+                    self.HPI.volume_patch = volume_patch
+                    self.HPI.pred_patch_mask = prev_round_mask
+                    self.HPI.crop_info = crop_info
                     
-                    if "int3d" in freeze_params:
-                        with torch.no_grad():
-                            _ = self.iMIS.run_3d_model(scribble_mask, crop_first=False)
-                        loss_3d = 0
-                    else:
-                        pred_patch_mask = self.iMIS.run_3d_model(scribble_mask, crop_first=False)
-                        _, _, loss_3d = criterion(net_output=pred_patch_mask, target=mask_patch)
+                    pred_patch_mask = self.HPI.run_3d_model(scribble_mask, crop_first=False)
+                    _, _, loss_3d = criterion(net_output=pred_patch_mask, target=mask_patch)
 
-                    # print(slice_idx[0][0])
-                    # print(start_slice.shape, slice_scribble.shape,prev_round_mask[:,:, slice_idx[0][0]].shape,slice_idx)
-                    pred_slice_mask = self.iMIS.run_int_model(start_slice, slice_scribble[:,0:1], prev_round_mask[:,:, slice_idx[0][0]], case_ID = caseID, slice_idx=slice_idx)
+                    pred_slice_mask = self.HPI.run_2d_model(start_slice, slice_scribble, slice_prev_mask, case_ID = caseID, slice_idx=slice_idx)
                     
-                    pred_patch_mask = self.iMIS.run_3d_model(scribble_mask, crop_first=False)
+                    # pred_patch_mask = self.HPI.run_3d_model(scribble_mask, crop_first=False)
 
                     f_3d_dict = [defaultdict(list), defaultdict(list)]
                     crop = crop_info["crop_range"]
                     target_mask = [slice_1_mask[:,:,crop[1]:crop[4],crop[2]:crop[5]], slice_2_mask[:,:,crop[1]:crop[4],crop[2]:crop[5]]]
                     for i in range(bs):
                         for j in range(2):
-                            f_3d, preds = self.iMIS.decode_3d_feature(slice_idx[j+1][i], pred=True)
+                            f_3d, preds = self.HPI.decode_3d_feature(slice_idx[j+1][i], pred=True)
                             for k in f_3d.keys():
                                 f_3d_dict[j][k].append(f_3d[k])
                                 
@@ -384,9 +371,9 @@ class TrainManager(object):
                     loss_convert_ce /= 4
                     loss_convert_dc /= 4
 
-                    pred_slice_1_mask, _ = self.iMIS.run_prop_model(target_image=slice_1, f_3d=f_3d_dict[0], \
+                    pred_slice_1_mask, _ = self.HPI.run_prop_model(target_image=slice_1, f_3d=f_3d_dict[0], \
                         segmented_images=start_slice, segmented_masks=pred_slice_mask, clear=True)
-                    pred_slice_2_mask, _ = self.iMIS.run_prop_model(target_image=slice_2, f_3d=f_3d_dict[1], \
+                    pred_slice_2_mask, _ = self.HPI.run_prop_model(target_image=slice_2, f_3d=f_3d_dict[1], \
                         segmented_images=slice_1, segmented_masks=pred_slice_1_mask, clear=True)
                     
                     pred_slice_1_mask[pred_slice_1_mask >= 0.5] = 1
@@ -414,8 +401,8 @@ class TrainManager(object):
                         mae_score.update(slice_2_mae, 1)
 
                         # 计算Hausdorff距离
-                        hd_1 = HD(slice_1_mask[b].cpu(), pred_slice_1_mask[b].cpu())
-                        hd_2 = HD(slice_2_mask[b].cpu(), pred_slice_2_mask[b].cpu())
+                        hd_1 = HD(slice_1_mask[b][0].cpu(), pred_slice_1_mask[b][0].cpu())
+                        hd_2 = HD(slice_2_mask[b][0].cpu(), pred_slice_2_mask[b][0].cpu())
                         # print(hd_1, hd_2)
                         if not math.isinf(hd_1):
                             hd_score.update(hd_1, 1)
@@ -436,13 +423,11 @@ class TrainManager(object):
                 print("test MAE_slice:", mae_slice)
             
                 if dice_slice >= best_dice:
-                    torch.save(self.iMIS.prop_model.state_dict(), './checkpoint/dict/prop_model.pth')
-                    torch.save(self.iMIS.f3d_converter.state_dict(), './checkpoint/dict/f3d_converter.pth')
-                    torch.save(self.iMIS.seg3d_model.state_dict(), './checkpoint/dict/seg3d_model.pth')
-                    torch.save(self.iMIS.int_model.state_dict(), './checkpoint/dict/int_model.pth')
-
-
-            
+                    best_dice = dice_slice
+                    torch.save(self.HPI.prop_model.state_dict(), './checkpoints/private/prop_model.pth')
+                    torch.save(self.HPI.f3d_converter.state_dict(), './checkpoints/private/f3d_converter.pth')
+                    torch.save(self.HPI.seg3d_model.state_dict(), './checkpoints/private/seg3d_model.pth')
+                    torch.save(self.HPI.seg2d_model.state_dict(), './checkpoints/private/seg2d_model.pth')
 
     def load_network(self,net,pretrained_dict):
         model_dict = net.state_dict()
@@ -496,7 +481,7 @@ class TrainManager(object):
 
         self.interaction_model.load_state_dict(src_dict)
 
-cfg.TRAIN_OBJECT = "organ"
+cfg.TRAIN_OBJECT = "ICH"
 cfg.SAVE_LOG_DIR = "./log"
 if cfg.SAVE_LOG:
     from tensorboardX import SummaryWriter
@@ -524,5 +509,5 @@ cfg.TRAIN_PROP_WEIGHT_DECAY = 1e-7
 cfg.PRETRAINED_MODEL_PROP = ""
 cfg.PRETRAINED_MODEL_CONVERT = ""
 train_manager = TrainManager()
-# train_manager.iMIS.f3d_converter.load_state_dict(converter_weight)
+# train_manager.HPI.f3d_converter.load_state_dict(converter_weight)
 train_manager.train_propagation(start_epo=1, freeze_params='')

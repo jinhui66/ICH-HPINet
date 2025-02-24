@@ -11,8 +11,8 @@ def str2bool(v):
     else:
         raise argparse.ArgumentTypeError('Boolean value expected.')
 
-parser = argparse.ArgumentParser(description='iMIS configuration')
-parser.add_argument('--SAVE_LOG_DIR',type=str,default='')
+parser = argparse.ArgumentParser(description='HPI configuration')
+parser.add_argument('--SAVE_LOG_DIR',type=str,default='./log')
 parser.add_argument('--SAVE_LOG' ,type=str2bool,default= True)
 parser.add_argument('--SAVE_RESULT_DIR',type=str,default='')
 
@@ -50,11 +50,13 @@ parser.add_argument('--TRAIN_PROP_SAVE_IMG_INTERVAL',type=int,default = 20)
 parser.add_argument('--TRAIN_OBJECT',type=str,default= "organ")
 parser.add_argument('--TRAIN_DATASET_LENGTH',type=int,default= 1)
 
-parser.add_argument('--DATA_ROOT',type=str,default= "path")
-parser.add_argument('--DATA_TRAIN_LIST',type=str,default= "./train.txt")
-parser.add_argument('--DATA_TEST_LIST',type=str,default= "./test.txt")
+parser.add_argument('--DATA_ROOT',type=str,default= "/data3/wangchangmiao/jinhui/DATA/private_ICH")
+parser.add_argument('--DATA_TRAIN_LIST',type=str,default= "../ICH-HPINet/data/train.txt")
+parser.add_argument('--DATA_TEST_LIST',type=str,default= "../ICH-HPINet/data/test.txt")
+# parser.add_argument('--DATA_ROOT',type=str,default= "/data3/wangchangmiao/jinhui/DATA/multitask/data3d")
+# parser.add_argument('--DATA_TRAIN_LIST',type=str,default= "/home/wangchangmiao/jinhui/IntCTSeg/data/public_train.txt")
+# parser.add_argument('--DATA_TEST_LIST',type=str,default= "/home/wangchangmiao/jinhui/IntCTSeg/data/public_test.txt")
 
-parser.add_argument('--DATA_EVAL_LIST',type=str,default= "./eval.txt")
 parser.add_argument('--DATA_INFO_FILE',type=str,default= "")
 
 parser.add_argument('--DATA_RANDOMFLIP',type=float, default=0.5)
@@ -64,6 +66,7 @@ parser.add_argument('--DATA_RANDOMCROP',type=int,default = 416)
 parser.add_argument('--TRAIN_TOP_K_PERCENT_PIXELS',type=float,default=0.15)
 parser.add_argument('--TRAIN_HARD_MINING_STEP',type=int,default=50000)
 
+# cfg=parser.parse_args()
 cfg=parser.parse_known_args()[0]
                 
 # if not torch.cuda.is_available():
