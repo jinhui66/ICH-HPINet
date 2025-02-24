@@ -49,12 +49,6 @@ class TrainManager(object):
         if not os.path.exists(self.save_res_dir):
             os.makedirs(self.save_res_dir)
 
-        with open(os.path.join(self.save_res_dir, "pretrained_model.txt"), "w") as f:
-            f.write("seg3d model: " + "\n" + cfg.PRETRAINED_MODEL_3D + "\n\n")
-            f.write("interaction model: " + "\n" + cfg.PRETRAINED_MODEL_INT + "\n\n")
-            f.write("propagation model: " + "\n" + cfg.PRETRAINED_MODEL_PROP + "\n\n")
-            f.write("converter model: " + "\n" + cfg.PRETRAINED_MODEL_CONVERT + "\n\n")
-
         self.seg3d_model = ResidualUNet3D(in_channels=4, out_channels=1, is_segmentation=False, layer_order="bcr").to(device)
         self.seg2d_model = deeplabv3_resnet50(num_classes=1, output_stride=16, pretrained_backbone=False).to(device)
         self.propagation_model = PropagationNetwork().to(device)
