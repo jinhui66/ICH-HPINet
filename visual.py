@@ -338,6 +338,4 @@ test_manager = TestManager(
     }
 )
 
-test_manager.test_multi_propagation(prop_weights, convert_weights, seg3d_weights=seg3d_weights, )
-# int_weights = [os.path.join(p,"int_model_epo0%04d.pth"%(50*i)) for i in range(11,15)]
-# test_manager.test_multi_interaction(int_weights, init_seg=False)
+test_manager.test_multi_propagation(prop_weights, convert_weights, seg3d_weights=seg3d_weights, seg2d_weights=seg2d_weights)
