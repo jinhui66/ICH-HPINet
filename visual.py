@@ -47,7 +47,7 @@ class TestManager(object):
         self.save_res_dir = save_result_dir
         self.weights = trained_weights
         self.object = cfg.TRAIN_OBJECT
-        self.int_batch_size = 12 if self.object=="organ" else 6
+        self.int_batch_size = 12
         self.prop_batch_size = 3
 
         if not os.path.exists(self.save_res_dir):
