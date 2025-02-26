@@ -63,7 +63,7 @@ max_time=None
 max_nb_interactions=10
 metric_to_optimize='Dice'
 save_dir = "./eval"
-target_object = "organ"
+target_object = "ICH"
 
 t = time.strftime("%Y%m%d_%H%M%S", time.localtime())
 save_dir = os.path.join(save_dir, t)
