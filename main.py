@@ -269,10 +269,8 @@ class TrainManager(object):
                     hd_1 = HD(slice_1_mask[b][0].cpu(), pred_slice_1_mask[b][0].cpu())
                     hd_2 = HD(slice_2_mask[b][0].cpu(), pred_slice_2_mask[b][0].cpu())
                     # print(hd_1, hd_2)
-                    if not math.isinf(hd_1):
-                        hd_score.update(hd_1, 1)
-                    if not math.isinf(hd_2):
-                        hd_score.update(hd_2, 1)
+                    hd_score.update(hd_1, 1)
+                    hd_score.update(hd_2, 1)
                 
             dice_slice = dice_score.avg
             hd_slice = hd_score.avg  # 计算平均Hausdorff距离
@@ -398,10 +396,8 @@ class TrainManager(object):
                         hd_1 = HD(slice_1_mask[b][0].cpu(), pred_slice_1_mask[b][0].cpu())
                         hd_2 = HD(slice_2_mask[b][0].cpu(), pred_slice_2_mask[b][0].cpu())
                         # print(hd_1, hd_2)
-                        if not math.isinf(hd_1):
-                            hd_score.update(hd_1, 1)
-                        if not math.isinf(hd_2):
-                            hd_score.update(hd_2, 1)
+                        hd_score.update(hd_1, 1)
+                        hd_score.update(hd_2, 1)
                         
                 dice_slice = dice_score.avg
                 hd_slice = hd_score.avg  # 计算平均Hausdorff距离
@@ -418,10 +414,10 @@ class TrainManager(object):
             
                 if dice_slice >= best_dice:
                     best_dice = dice_slice
-                    torch.save(self.HPI.prop_model.state_dict(), './checkpoints/private/prop_model.pth')
-                    torch.save(self.HPI.f3d_converter.state_dict(), './checkpoints/private/f3d_converter.pth')
-                    torch.save(self.HPI.seg3d_model.state_dict(), './checkpoints/private/seg3d_model.pth')
-                    torch.save(self.HPI.seg2d_model.state_dict(), './checkpoints/private/seg2d_model.pth')
+                    torch.save(self.HPI.prop_model.state_dict(), './checkpoints/prop_model.pth')
+                    torch.save(self.HPI.f3d_converter.state_dict(), './checkpoints/f3d_converter.pth')
+                    torch.save(self.HPI.seg3d_model.state_dict(), './checkpoints/seg3d_model.pth')
+                    torch.save(self.HPI.seg2d_model.state_dict(), './checkpoints/seg2d_model.pth')
 
     def load_network(self,net,pretrained_dict):
         model_dict = net.state_dict()
