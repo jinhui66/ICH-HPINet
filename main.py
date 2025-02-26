@@ -265,7 +265,6 @@ class TrainManager(object):
                     mae_score.update(slice_1_mae, 1)
                     mae_score.update(slice_2_mae, 1)
 
-                    # 计算Hausdorff距离
                     hd_1 = HD(slice_1_mask[b][0].cpu(), pred_slice_1_mask[b][0].cpu())
                     hd_2 = HD(slice_2_mask[b][0].cpu(), pred_slice_2_mask[b][0].cpu())
                     # print(hd_1, hd_2)
@@ -273,7 +272,7 @@ class TrainManager(object):
                     hd_score.update(hd_2, 1)
                 
             dice_slice = dice_score.avg
-            hd_slice = hd_score.avg  # 计算平均Hausdorff距离
+            hd_slice = hd_score.avg 
             jaccard_slice = jaccard_score.avg
             mae_slice = mae_score.avg
             
@@ -373,7 +372,6 @@ class TrainManager(object):
                     pred_slice_2_mask[pred_slice_2_mask >= 0.5] = 1
                     pred_slice_2_mask[pred_slice_2_mask < 0.5] = 0
                     
-                    # 计算Dice系数
                     for b in range(bs):
                         
                         slice_1_dice = dice(slice_1_mask[b].cpu(), pred_slice_1_mask[b].cpu()).item()
@@ -392,7 +390,6 @@ class TrainManager(object):
                         mae_score.update(slice_1_mae, 1)
                         mae_score.update(slice_2_mae, 1)
 
-                        # 计算Hausdorff距离
                         hd_1 = HD(slice_1_mask[b][0].cpu(), pred_slice_1_mask[b][0].cpu())
                         hd_2 = HD(slice_2_mask[b][0].cpu(), pred_slice_2_mask[b][0].cpu())
                         # print(hd_1, hd_2)
@@ -400,7 +397,7 @@ class TrainManager(object):
                         hd_score.update(hd_2, 1)
                         
                 dice_slice = dice_score.avg
-                hd_slice = hd_score.avg  # 计算平均Hausdorff距离
+                hd_slice = hd_score.avg
                 jaccard_slice = jaccard_score.avg
                 mae_slice = mae_score.avg
 
