@@ -3,8 +3,8 @@ import os
 import numpy as np
 import torch
 
-path1 = "/data3/wangchangmiao/jinhui/DATA/private_ICH/binary_mask/"
-path2 = "/data3/wangchangmiao/jinhui/DATA/public_ICH/binary_mask/"
+path1 = "./private_ICH/binary_mask/"
+path2 = "./public_ICH/binary_mask/"
 
 
 output_file1 = open('private_list.txt', 'w')
