@@ -250,7 +250,6 @@ class TestManager(object):
             # image = Image.fromarray(pred2[0][0].astype(np.uint8)*255)
             # image.save(f"./visual/{ba}_{caseID[0]}_down_pred.png")        
             
-            # 计算Dice系数
             for b in range(bs):
                 
                 # print(slice_1_mask.shape, pred_slice_1_mask.shape)
@@ -295,23 +294,8 @@ class TestManager(object):
             logger.add_image("slice_2_gt_mask", slice_2_mask[0].cpu(), step)
             logger.add_image("slice_2_pred_mask", pred_slice_2_mask[0].detach().cpu(), step)
 
-    def test_multi_interaction(self, int_weights, init_seg=False):
-        start_time = time.strftime("%Y%m%d_%H%M", time.localtime()) 
-        save_path = os.path.join(self.save_res_dir, "test_int_init-{}_{}".format(init_seg,start_time))
-        if not os.path.exists(save_path):
-            os.makedirs(save_path)
-        logger = SummaryWriter(save_path)
 
-        for weight_path in int_weights:
-            print(os.path.basename(weight_path))
-            self.weights["seg2d"] = weight_path
-            self.load_weights()
-
-            step = int(weight_path.split("_")[-1].split('.')[0][3:])
-            self.test_single_interaction(step=step, init_seg=init_seg, logger=logger)
-            logger.add_text("weight_path", weight_path, step)
-
-    def test_multi_propagation(self, prop_weights, converter_weights, seg3d_weights=None):
+    def test_multi_propagation(self, prop_weights, converter_weights, seg3d_weights=None, seg2d_weights=None):
         start_time = time.strftime("%Y%m%d_%H%M", time.localtime()) 
         save_path = os.path.join(self.save_res_dir, "test_prop_{}".format(start_time))
         if not os.path.exists(save_path):
@@ -324,6 +308,8 @@ class TestManager(object):
         self.weights["convert"] = converter_weights
         if seg3d_weights is not None:
             self.weights["seg3d"] = seg3d_weights
+        if seg2d_weights is not None:
+            self.weights["seg2d"] = seg2d_weights
         self.load_weights()
 
         self.test_single_propagation(logger=logger)
@@ -339,10 +325,10 @@ cfg.TRAIN_OBJECT = "organ"
 result_dir = "./result" 
 
 p = result_dir
-prop_weights = "/data3/wangchangmiao/jinhui/ICH-HPINet/checkpoints/private/prop_model.pth"
-convert_weights = "/data3/wangchangmiao/jinhui/ICH-HPINet/checkpoints/private/f3d_converter.pth"
-seg3d_weights = "/data3/wangchangmiao/jinhui/ICH-HPINet/checkpoints/private/seg3d_model.pth"
-seg2d_weights = "/data3/wangchangmiao/jinhui/ICH-HPINet/checkpoints/private/seg2d_model.pth"
+prop_weights = "./checkpoints/prop_model.pth"
+convert_weights = "./checkpoints/f3d_converter.pth"
+seg3d_weights = "./checkpoints/seg3d_model.pth"
+seg2d_weights = "./checkpoints/seg2d_model.pth"
 
 test_manager = TestManager(
     save_result_dir = result_dir,
@@ -352,6 +338,6 @@ test_manager = TestManager(
     }
 )
 
-test_manager.test_multi_propagation(prop_weights, convert_weights, seg3d_weights=seg3d_weights)
+test_manager.test_multi_propagation(prop_weights, convert_weights, seg3d_weights=seg3d_weights, )
 # int_weights = [os.path.join(p,"int_model_epo0%04d.pth"%(50*i)) for i in range(11,15)]
 # test_manager.test_multi_interaction(int_weights, init_seg=False)
