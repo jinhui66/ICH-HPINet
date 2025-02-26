@@ -51,8 +51,8 @@ parser.add_argument('--TRAIN_OBJECT',type=str,default= "organ")
 parser.add_argument('--TRAIN_DATASET_LENGTH',type=int,default= 1)
 
 parser.add_argument('--DATA_ROOT',type=str,default= "./DATA/private_ICH")
-parser.add_argument('--DATA_TRAIN_LIST',type=str,default= "../ICH-HPINet/data/train.txt")
-parser.add_argument('--DATA_TEST_LIST',type=str,default= "../ICH-HPINet/data/test.txt")
+parser.add_argument('--DATA_TRAIN_LIST',type=str,default= "./data/train.txt")
+parser.add_argument('--DATA_TEST_LIST',type=str,default= "./data/test.txt")
 
 
 parser.add_argument('--DATA_INFO_FILE',type=str,default= "")
