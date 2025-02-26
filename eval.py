@@ -16,10 +16,10 @@ from skimage import io, img_as_ubyte
 os.environ['TORCH_HOME'] = './pretrained-model'
 from argparse import ArgumentParser
 parser = ArgumentParser()
-parser.add_argument('--seg2d_weight', type=str, default="../ICH-HPINet-save/checkpoints/private/seg2d_model.pth")
-parser.add_argument('--prop_weight', type=str, default="../ICH-HPINet-save/checkpoints/private/prop_model.pth")
-parser.add_argument('--seg3d_weight', type=str, default="../ICH-HPINet-save/checkpoints/private/seg3d_model.pth")
-parser.add_argument('--convert_weight', type=str, default="../ICH-HPINet-save/checkpoints/private/f3d_converter.pth")
+parser.add_argument('--seg2d_weight', type=str, default="./checkpoints/seg2d_model.pth")
+parser.add_argument('--prop_weight', type=str, default="./checkpoints/prop_model.pth")
+parser.add_argument('--seg3d_weight', type=str, default="./checkpoints/seg3d_model.pth")
+parser.add_argument('--convert_weight', type=str, default="./checkpoints/f3d_converter.pth")
 parser.add_argument('--thresh', type=float, default=0.5)
 args = parser.parse_args()
 
