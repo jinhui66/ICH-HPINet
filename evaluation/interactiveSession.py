@@ -14,33 +14,6 @@ from davisinteractive.utils.scribbles import scribbles2mask
 from davisinteractive.robot.interactive_robot import InteractiveScribblesRobot
 import SimpleITK as sitk
 class KiTSInteractiveSession:
-    """ Class which allows to interface with the evaluation, modified from davisinteractive
-
-    # Arguments
-        data_dir: String. Path to the processed KiTS dataset root path.
-        ori_data_dir: String. Path to the original KiTS dataset root path, 
-            necessary for evaluation on the original size.
-        val_set: String. Path to the txt file which contains the index of validation data.
-        shuffle: Boolean. Shuffle the samples when evaluating.
-        max_time: Integer. Maximum time to evaluate a sample (a sequence with
-            a certain set of initial scribbles). This time should be set per
-            object as it adapts to the number of objects internally. If
-            `max_nb_interactions` is also specified, this time is defined
-            as the time available to perform all the interactions.
-        max_nb_interactions: Integer. Maximum number of interactions to
-            evaluate per sample.
-        metric_to_optimize: String. Metric targeting to optimize. Possible values:
-            Dice.
-        save_report_dir: String. Path to the directory where the report will
-            be stored during the evaluation. By default is the current working
-            directory.
-        save_img_dir: String. Path to the directory where the predicted images will
-            be stored during the evaluation. By default is the current working
-            directory.
-        target_object: String. Target object name, possible values: organ, tumor.
-        save_results: Bool. Indicate whether to save the predicted images.
-        thresh: Float, range 0-1. Threshold for binarize the masks.
-    """
     def __init__(self,
                  data_dir=None,
                  ori_data_dir="",
@@ -51,7 +24,7 @@ class KiTSInteractiveSession:
                  metric_to_optimize='Dice',
                  save_img_dir=None,
                  save_report_dir=None,
-                 target_object="organ",
+                 target_object="",
                  save_results=True,
                  thresh = 0.5
                  ):
@@ -60,8 +33,7 @@ class KiTSInteractiveSession:
         self.target_object = target_object
         self.save_results = save_results
         self.thresh = thresh
-        if target_object in ["organ","tumor"]:
-            self.nb_object = 1
+        self.nb_object = 1
 
         self.val_set = val_set
         self.shuffle = shuffle
@@ -104,7 +76,7 @@ class KiTSInteractiveSession:
         min_nb_nodes: Integer. Number of nodes necessary to keep a connected graph and convert it into a scribble.
         nb_points: Integer. Number of points to sample the bezier curve when converting the final paths into curves.
         '''
-        nb_nodes = 3 if target_object=="tumor" else 4
+        nb_nodes = 4
         self.scribble_robot = InteractiveScribblesRobot(
             kernel_size=0.15,
             max_kernel_radius=16,
