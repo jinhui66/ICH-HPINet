@@ -17,14 +17,6 @@ def dice(annotation, segmentation, void_pixels=None, thresh=0.5):
 
 
 def jaccard(gt, pred):
-    """
-    计算Jaccard指数(IoU)
-    Args:
-        pred: 预测图像
-        gt: 真实标签图像
-    Returns:
-        float: Jaccard指数
-    """
     pred = pred.detach().numpy()
     gt = gt.detach().numpy()
 
