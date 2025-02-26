@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 
 crop_size = 96
 padding = 10 # if target size is larger than crop_size, padding, crop and resize
-ori_data_path = "/data/lyshi/datasets/nnUNet_data/nnUnet_preprocessed/Task050_KiTS/nnUNetData_plans_v2.1_2D_stage0"
-save_data_path = "/mntnfs/med_data2/shiluyue/InteractiveCTSeg/dataset/KiTS_Organ_3D_Patch"
+ori_data_path = ""
+save_data_path = ""
 if not os.path.exists(save_data_path):
     os.makedirs(save_data_path)
 
