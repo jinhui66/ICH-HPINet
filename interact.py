@@ -55,8 +55,8 @@ processor = HPI(seg3d_model.cuda(), seg2d_model.cuda(), propagation_model.cuda()
 
 save_final_mask = False
 save_round_mask = False
-data_dir="/data3/wangchangmiao/jinhui/DATA/private_ICH"
-ori_data_dir="/data3/wangchangmiao/jinhui/DATA/private_ICH"
+data_dir="./DATA/private_ICH"
+ori_data_dir="./private_ICH"
 val_set='./eval.txt'
 shuffle=False
 max_time=None
