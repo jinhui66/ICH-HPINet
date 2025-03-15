@@ -154,6 +154,7 @@ python main.py
     </tr>
   </tbody>
 </table>
+most methods perform well in simpler cases, like those in (b), with high segmentation accuracy. However, in more complex scenarios, ICH-HPINet outperforms other methods in terms of precision and competitiveness. For instance, in challenging cases with multiple bleeding points (a and c), our approach shows superior results. In samples with very small outliers such as (d), our method still achieves significant results.
 
 ### Ablation Experiment
 #### Private dataset
