@@ -21,6 +21,11 @@
 ## Dataset
 The private dataset contains 286 cases, while the [Physionet](https://physionet.org/content/ct-ich/1.3.1/#files-panel) dataset contains 75 cases. Each case consists of a volume CT data and a volume mask data. During training, the data are splited through five-fold cross-validation.
 
+## Train
+```
+python main.py
+```
+
 ## Experiment Results
 ### Comparative Experiment
 #### Private dataset
@@ -226,3 +231,70 @@ The private dataset contains 286 cases, while the [Physionet](https://physionet.
 
 ## Visual Comparison
 ![image](./figures/visual.png)
+
+## Interaction Experiment
+<table align="center">
+  <thead>
+    <tr>
+      <th>Number</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Dice↑</td>
+      <td>0.6133</td>
+      <td>0.7763</td>
+      <td>0.7770</td>
+      <td>0.7831</td>
+      <td>0.7820</td>
+      <td>0.7856</td>
+      <td>0.7868</td>
+      <td>0.7865</td>
+    </tr>
+    <tr>
+      <td>Jaccard↑</td>
+      <td>0.4499</td>
+      <td>0.6471</td>
+      <td>0.6469</td>
+      <td>0.6537</td>
+      <td>0.6527</td>
+      <td>0.6567</td>
+      <td>0.6583</td>
+      <td>0.6580</td>
+    </tr>
+    <tr>
+      <td>HD↓</td>
+      <td>4.50</td>
+      <td>3.61</td>
+      <td>3.61</td>
+      <td>3.66</td>
+      <td>3.64</td>
+      <td>3.60</td>
+      <td>3.56</td>
+      <td>3.56</td>
+    </tr>
+    <tr>
+      <td>MAE↓</td>
+      <td>0.0065</td>
+      <td>0.0043</td>
+      <td>0.0043</td>
+      <td>0.0043</td>
+      <td>0.0042</td>
+      <td>0.0042</td>
+      <td>0.0042</td>
+      <td>0.0042</td>
+    </tr>
+  </tbody>
+</table>
+
+```
+python interact.py
+```
