@@ -304,4 +304,4 @@ Most methods perform well in simpler cases, like those in (b), with high segment
 python interact.py
 ```
 
-Tht segmentation results are updated with every interaction, showing the most significant improvement during the initial stages. Following the second interaction, the results begin to stabilize, yet they continue to exhibit overall improvement. These results highlight the effectiveness of our interactive approach and its ability to progressively refine segmentation with additional user input.
+Tht segmentation results are updated with every interaction, showing the most significant improvement during the initial stages. Following the second interaction, the results begin to stabilize, yet they continue to exhibit overall improvement. These results highlight the effectiveness of our interactive approach and its ability to progressively refine segmentation with additional user input.
