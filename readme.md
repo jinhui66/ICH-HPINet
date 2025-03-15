@@ -154,7 +154,8 @@ python main.py
     </tr>
   </tbody>
 </table>
-most methods perform well in simpler cases, like those in (b), with high segmentation accuracy. However, in more complex scenarios, ICH-HPINet outperforms other methods in terms of precision and competitiveness. For instance, in challenging cases with multiple bleeding points (a and c), our approach shows superior results. In samples with very small outliers such as (d), our method still achieves significant results.
+
+Our approach demonstrated significant improvements on both our private and public datasets, enhancing Dice, Jaccard, HD, and MAE scores by at least 0.1116, 0.1028, 0.03, and 0.0007, respectively, on the private dataset, and 0.0489, 0.0107, 0.66 and 0.0013 on the Physionet dataset. Even with fewer annotations, our method consistently achieves optimal results, demonstrating its superiority.
 
 ### Ablation Experiment
 #### Private dataset
@@ -229,8 +230,12 @@ most methods perform well in simpler cases, like those in (b), with high segment
   </tbody>
 </table>
 
+The hybrid strategy improved Dice, Jaccard, HD, and MAE scores by at least 0.1243, 0.1277, 0.73, and 0.00143 on the private dataset, and 0.1116, 0.0942, 1.33, and 0.01255 on the Physionet dataset, respectively.
+
 ## Visual Comparison
 ![image](./figures/visual.png)
+
+Most methods perform well in simpler cases, like those in (b), with high segmentation accuracy. However, in more complex scenarios, ICH-HPINet outperforms other methods in terms of precision and competitiveness. For instance, in challenging cases with multiple bleeding points (a and c), our approach shows superior results. In samples with very small outliers such as (d), our method still achieves significant results.
 
 ## Interaction Experiment
 <table align="center">
@@ -298,3 +303,5 @@ most methods perform well in simpler cases, like those in (b), with high segment
 ```
 python interact.py
 ```
+
+Tht segmentation results are updated with every interaction, showing the most significant improvement during the initial stages. Following the second interaction, the results begin to stabilize, yet they continue to exhibit overall improvement. These results highlight the effectiveness of our interactive approach and its ability to progressively refine segmentation with additional user input.
