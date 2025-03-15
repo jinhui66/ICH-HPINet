@@ -21,6 +21,7 @@
 The private dataset contains 286 cases, while the [Physionet](https://physionet.org/content/ct-ich/1.3.1/#files-panel) dataset contains 75 cases. Each case consists of a volume CT data and a volume mask data. During training, the data are splited through five-fold cross-validation.
 
 ## Train
+You can run it through the following command: 
 ```
 python main.py
 ```
@@ -300,6 +301,7 @@ Most methods perform well in simpler cases, like those in (b), with high segment
   </tbody>
 </table>
 
+You can run it through the following command:
 ```
 python interact.py
 ```
