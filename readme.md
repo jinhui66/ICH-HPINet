@@ -13,8 +13,7 @@
     -- the model
 └─main.py
 └─utils.py
-└─visual.py
-└─eval.py
+└─interact.py
 └─config.py
 ```
 
