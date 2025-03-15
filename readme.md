@@ -156,7 +156,7 @@ python main.py
   </tbody>
 </table>
 
-Our approach demonstrated significant improvements on both our private and public datasets, enhancing Dice, Jaccard, HD, and MAE scores by at least 0.1116, 0.1028, 0.03, and 0.0007, respectively, on the private dataset, and 0.0489, 0.0107, 0.66 and 0.0013 on the Physionet dataset. Even with fewer annotations, our method consistently achieves optimal results, demonstrating its superiority.
+Our approach demonstrated significant improvements on both our private and public datasets, enhancing Dice, Jaccard, HD, and MAE scores by at least 0.1116, 0.1028, 0.03, and 0.0007, respectively, on the private dataset, and 0.0489, 0.0107, 0.66 and 0.0013 on the Physionet dataset. Even with fewer annotations, our method consistently achieves optimal results, demonstrating its superiority.
 
 ### Ablation Experiment
 #### Private dataset
