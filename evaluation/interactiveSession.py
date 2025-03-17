@@ -270,11 +270,6 @@ class KiTSInteractiveSession:
 
         print('Giving scribble to the user')
 
-        # np.save("/home/shiluyue/Documents/InteractiveCTSeg/Mine/results/debug/pred_mask_{}.npy".format(self.interaction_nb), self.pred_mask)
-        if len(np.unique(scribble))==1:
-            with open("/home/shiluyue/Documents/InteractiveCTSeg/Mine/results/debug/no_scibble.txt", 'a') as f:
-                f.write("{}-{}-{}\n".format(self.current_seq, selected_slice, np.sum(self.gt_mask[selected_slice])))
-
         return data_index, scribble, first_ite, self.volume
     
     def submit_masks(self, pred_masks, next_scribble_frame_candidates=None):
