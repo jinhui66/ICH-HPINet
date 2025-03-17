@@ -50,9 +50,10 @@ parser.add_argument('--TRAIN_PROP_SAVE_IMG_INTERVAL',type=int,default = 20)
 parser.add_argument('--TRAIN_OBJECT',type=str,default= "organ")
 parser.add_argument('--TRAIN_DATASET_LENGTH',type=int,default= 1)
 
-parser.add_argument('--DATA_ROOT',type=str,default= "./DATA/private_ICH")
+parser.add_argument('--DATA_ROOT',type=str,default= "./sample_data")
 parser.add_argument('--DATA_TRAIN_LIST',type=str,default= "./data/train.txt")
 parser.add_argument('--DATA_TEST_LIST',type=str,default= "./data/test.txt")
+parser.add_argument('--DATA_VISUAL_LIST',type=str,default= "./data/visual.txt")
 
 
 parser.add_argument('--DATA_INFO_FILE',type=str,default= "")

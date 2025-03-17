@@ -1,5 +1,5 @@
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "6"
 os.environ['TORCH_HOME'] = './pretrained-model'
 
 from multiprocessing.dummy import freeze_support
@@ -411,10 +411,10 @@ class TrainManager(object):
             
                 if dice_slice >= best_dice:
                     best_dice = dice_slice
-                    torch.save(self.HPI.prop_model.state_dict(), './checkpoints/prop_model.pth')
-                    torch.save(self.HPI.f3d_converter.state_dict(), './checkpoints/f3d_converter.pth')
-                    torch.save(self.HPI.seg3d_model.state_dict(), './checkpoints/seg3d_model.pth')
-                    torch.save(self.HPI.seg2d_model.state_dict(), './checkpoints/seg2d_model.pth')
+                    # torch.save(self.HPI.prop_model.state_dict(), './checkpoints/prop_model.pth')
+                    # torch.save(self.HPI.f3d_converter.state_dict(), './checkpoints/f3d_converter.pth')
+                    # torch.save(self.HPI.seg3d_model.state_dict(), './checkpoints/seg3d_model.pth')
+                    # torch.save(self.HPI.seg2d_model.state_dict(), './checkpoints/seg2d_model.pth')
 
     def load_network(self,net,pretrained_dict):
         model_dict = net.state_dict()

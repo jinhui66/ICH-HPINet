@@ -1,3 +1,6 @@
+import os
+os.environ['TORCH_HOME'] = './pretrained-model'
+os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 from genericpath import exists
 from time import ctime
 import numpy as np
@@ -10,10 +13,8 @@ from networks.deepLabV3.modeling import deeplabv3_resnet50, deeplabv3_mobilenet
 from networks.STCN.prop_net import PropagationNetwork, Converter
 from networks.unet3d.model import ResidualUNet3D
 
-import os
 import time
 from skimage import io, img_as_ubyte
-os.environ['TORCH_HOME'] = './pretrained-model'
 from argparse import ArgumentParser
 parser = ArgumentParser()
 parser.add_argument('--seg2d_weight', type=str, default="./checkpoints/seg2d_model.pth")
@@ -52,12 +53,11 @@ propagation_model.load_state_dict(pretrained_dict)
 propagation_model.eval()
 
 processor = HPI(seg3d_model.cuda(), seg2d_model.cuda(), propagation_model.cuda(), f3d_converter=convert_model.cuda())
-
 save_final_mask = False
 save_round_mask = False
-data_dir="./DATA/private_ICH"
-ori_data_dir="./private_ICH"
-val_set='./eval.txt'
+data_dir="./sample_data"
+ori_data_dir="./sample_data"
+val_set='./data/eval.txt'
 shuffle=False
 max_time=None
 max_nb_interactions=8

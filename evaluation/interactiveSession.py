@@ -416,11 +416,7 @@ class KiTSInteractiveSession:
                 mae_list.append(slice_mae)
 
             idx = self.interaction_slice[self.interaction_nb-1] + 1
-            sample_dice = dice_list[idx]
-            sample_jaccard = jaccard_list[idx]
-            sample_hd = hd_list[idx]
-            sample_mae = mae_list[idx].item()
-            self.eval_score_interaction.append([sample_dice, sample_jaccard, sample_hd, sample_mae])
+            self.eval_score_interaction.append(sample_dice)
 
         else:
             print("The evaluation metric does not exist, choose from 'Dice'.")    
