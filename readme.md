@@ -308,4 +308,4 @@ python interact.py
 
 Tht segmentation results are updated with every interaction, showing the most significant improvement during the initial stages. Following the second interaction, the results begin to stabilize, yet they continue to exhibit overall improvement. These results highlight the effectiveness of our interactive approach and its ability to progressively refine segmentation with additional user input.
 
-You can download the pretrained model by this [link](https://pan.baidu.com/s/1seM2w4V5iRyIbYd9Pv7jkw?pwd=cn2e)
+You can download the pretrained model by this [link](https://pan.baidu.com/s/1seM2w4V5iRyIbYd9Pv7jkw?pwd=cn2e).
