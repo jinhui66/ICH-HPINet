@@ -47,7 +47,6 @@ python main.py
       <th>Jaccard↑</th>
       <th>HD↓</th>
       <th>MAE↓</th>
-
     </tr>
   </thead>
   <tbody>
