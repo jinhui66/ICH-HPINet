@@ -52,16 +52,16 @@ python main.py
   <tbody>
     <tr>
       <td>nnUNet</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>0.5713</td>
+      <td>0.4321</td>
+      <td>4.43</td>
+      <td>0.0086</td>
+      <td>0.4811</td>
+      <td>0.3858</td>
+      <td>5.15</td>
+      <td>0.0147</td>
+      <td>367G</td>
+      <td>19.1M</td>
     </tr>
     <tr>
       <td>BCDU-Net</td>
@@ -73,8 +73,8 @@ python main.py
       <td></td>
       <td></td>
       <td></td>
-      <td></td>
-      <td></td>
+      <td>768G</td>
+      <td>36.4M</td>
     </tr>
     <tr>
       <td>TransUNet</td>
@@ -86,8 +86,8 @@ python main.py
       <td></td>
       <td></td>
       <td></td>
-      <td></td>
-      <td></td>
+      <td>207G</td>
+      <td>105M</td>
     </tr>
     <tr>
       <td>SAMed</td>
