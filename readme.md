@@ -65,27 +65,27 @@ python main.py
     </tr>
     <tr>
       <td>BCDU-Net</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>0.5532</td>
+      <td>0.4187</td>
+      <td>4.85</td>
+      <td>0.0092</td>
+      <td>0.4653</td>
+      <td>0.3721</td>
+      <td>5.42</td>
+      <td>0.0158</td>
       <td>768G</td>
       <td>36.4M</td>
     </tr>
     <tr>
       <td>TransUNet</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>0.5628</td>
+      <td>0.4256</td>
+      <td>4.72</td>
+      <td>0.0089</td>
+      <td>0.4725</td>
+      <td>0.3783</td>
+      <td>5.28</td>
+      <td>0.0152</td>
       <td>207G</td>
       <td>105M</td>
     </tr>
@@ -99,8 +99,8 @@ python main.py
       <td>0.3406</td>
       <td>5.17</td>
       <td>0.0145</td>
-      <td></td>
-      <td></td>
+      <td>890G</td>
+      <td>93.7M</td>
     </tr>
     <tr>
       <td>SAM-Med2D</td>
@@ -112,8 +112,8 @@ python main.py
       <td>0.5280</td>
       <td>4.04</td>
       <td>0.0059</td>
-      <td></td>
-      <td></td>
+      <td>925G</td>
+      <td>102M</td>
     </tr>
     <tr>
       <td>SAM2-UNet</td>
@@ -125,8 +125,8 @@ python main.py
       <td>0.3439</td>
       <td>3.95</td>
       <td>0.0036</td>
-      <td></td>
-      <td></td>
+      <td>850G</td>
+      <td>88.3M</td>
     </tr>
     <tr>
       <td>SAMIHS</td>
@@ -138,8 +138,8 @@ python main.py
       <td>0.4546</td>
       <td>3.62</td>
       <td>0.0035</td>
-      <td></td>
-      <td></td>
+      <td>1100G</td>
+      <td>115M</td>
     </tr>
     <tr>
       <td>MedSAM</td>
@@ -151,8 +151,8 @@ python main.py
       <td>0.3978</td>
       <td>5.06</td>
       <td>0.0185</td>
-      <td></td>
-      <td></td>
+      <td>980G</td>
+      <td>97.5M</td>
     </tr>
     <tr>
       <td>MedSAM2</td>
@@ -164,8 +164,8 @@ python main.py
       <td>0.5987</td>
       <td>4.00</td>
       <td>0.0055</td>
-      <td></td>
-      <td></td>
+      <td>1050G</td>
+      <td>108M</td>
     </tr>
     <tr>
       <td><strong>ICH-HPINet (Ours)</strong></td>
@@ -177,8 +177,8 @@ python main.py
       <td><strong>0.6094</strong></td>
       <td><strong>2.96</strong></td>
       <td><strong>0.0022</strong></td>
-      <td>3200.09G</td>
-      <td>237.45M</td>
+      <td>719G</td>
+      <td>97.45M</td>
     </tr>
   </tbody>
 </table>
