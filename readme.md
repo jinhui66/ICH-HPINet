@@ -402,92 +402,92 @@ The hybrid strategy improved Dice, Jaccard, HD, and MAE scores by at least 0.124
       <td>1</td>
       <td>1</td>
       <td>8</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>0.7124</td>
+      <td>0.5812</td>
+      <td>3.82</td>
+      <td>0.0041</td>
+      <td>0.6464</td>
+      <td>0.5046</td>
+      <td>4.52</td>
+      <td>0.0047</td>
     </tr>
     <tr>
       <td>1</td>
       <td>3</td>
       <td>6</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>0.7236</td>
+      <td>0.5927</td>
+      <td>3.75</td>
+      <td>0.0040</td>
+      <td>0.6328</td>
+      <td>0.4915</td>
+      <td>4.35</td>
+      <td>0.0045</td>
     </tr>
     <tr>
       <td>1</td>
       <td>5</td>
       <td>4</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>0.7358</td>
+      <td>0.6039</td>
+      <td>3.71</td>
+      <td>0.0038</td>
+      <td>0.6043</td>
+      <td>0.4692</td>
+      <td>4.77</td>
+      <td>0.0049</td>
     </tr>
     <tr>
       <td>1</td>
       <td>7</td>
       <td>2</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>0.7283</td>
+      <td>0.5974</td>
+      <td>3.78</td>
+      <td>0.0039</td>
+      <td>0.6096</td>
+      <td>0.4672</td>
+      <td>4.79</td>
+      <td>0.0071</td>
     </tr>
     <tr>
       <td>3</td>
       <td>1</td>
       <td>6</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>0.7512</td>
+      <td>0.6245</td>
+      <td>3.65</td>
+      <td>0.0037</td>
+      <td>0.6983</td>
+      <td>0.5487</td>
+      <td>3.42</td>
+      <td>0.0035</td>
     </tr>
     <tr>
       <td>3</td>
       <td>3</td>
       <td>4</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>0.7624</td>
+      <td>0.6389</td>
+      <td>3.62</td>
+      <td>0.0036</td>
+      <td>0.7126</td>
+      <td>0.5724</td>
+      <td>3.28</td>
+      <td>0.0031</td>
     </tr>
     <tr>
       <td>3</td>
       <td>5</td>
       <td>2</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>0.7478</td>
+      <td>0.6213</td>
+      <td>3.67</td>
+      <td>0.0038</td>
+      <td>0.6842</td>
+      <td>0.5319</td>
+      <td>3.54</td>
+      <td>0.0038</td>
     </tr>
     <tr>
       <td>5</td>
@@ -506,30 +506,32 @@ The hybrid strategy improved Dice, Jaccard, HD, and MAE scores by at least 0.124
       <td>5</td>
       <td>3</td>
       <td>2</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>0.7683</td>
+      <td>0.6425</td>
+      <td>3.61</td>
+      <td>0.0036</td>
+      <td>0.7238</td>
+      <td>0.5836</td>
+      <td>3.12</td>
+      <td>0.0028</td>
     </tr>
     <tr>
       <td>7</td>
       <td>1</td>
       <td>2</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>0.7541</td>
+      <td>0.6287</td>
+      <td>3.64</td>
+      <td>0.0037</td>
+      <td>0.6622</td>
+      <td>0.5076</td>
+      <td>4.68</td>
+      <td>0.0043</td>
     </tr>
   </tbody>
 </table>
+
+
 
 ## Visual Comparison
 ![image](./figures/visual.png)
