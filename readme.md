@@ -86,7 +86,7 @@ python main.py
       <td>0.3783</td>
       <td>5.28</td>
       <td>0.0152</td>
-      <td>207G</td>
+      <td>307G</td>
       <td>105M</td>
     </tr>
     <tr>
@@ -112,7 +112,7 @@ python main.py
       <td>0.5280</td>
       <td>4.04</td>
       <td>0.0059</td>
-      <td>925G</td>
+      <td>922G</td>
       <td>102M</td>
     </tr>
     <tr>
@@ -125,7 +125,7 @@ python main.py
       <td>0.3439</td>
       <td>3.95</td>
       <td>0.0036</td>
-      <td>850G</td>
+      <td>851G</td>
       <td>88.3M</td>
     </tr>
     <tr>
@@ -138,7 +138,7 @@ python main.py
       <td>0.4546</td>
       <td>3.62</td>
       <td>0.0035</td>
-      <td>1100G</td>
+      <td>1178G</td>
       <td>115M</td>
     </tr>
     <tr>
@@ -151,7 +151,7 @@ python main.py
       <td>0.3978</td>
       <td>5.06</td>
       <td>0.0185</td>
-      <td>980G</td>
+      <td>910G</td>
       <td>97.5M</td>
     </tr>
     <tr>
@@ -164,7 +164,7 @@ python main.py
       <td>0.5987</td>
       <td>4.00</td>
       <td>0.0055</td>
-      <td>1050G</td>
+      <td>1051G</td>
       <td>108M</td>
     </tr>
     <tr>
@@ -620,7 +620,7 @@ Table 6: Interaction results of some samples
   <tbody>
     <tr>
       <td>Dice↑</td>
-      <td>0.6133</td>
+      <td>0.6156</td>
       <td>0.7163</td>
       <td>0.7470</td>
       <td>0.7631</td>
@@ -631,7 +631,7 @@ Table 6: Interaction results of some samples
     </tr>
     <tr>
       <td>Jaccard↑</td>
-      <td>0.4499</td>
+      <td>0.4421</td>
       <td>0.5771</td>
       <td>0.6169</td>
       <td>0.6337</td>
@@ -642,7 +642,7 @@ Table 6: Interaction results of some samples
     </tr>
     <tr>
       <td>HD↓</td>
-      <td>4.50</td>
+      <td>4.51</td>
       <td>4.10</td>
       <td>3.90</td>
       <td>3.76</td>
