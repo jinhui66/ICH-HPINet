@@ -539,6 +539,7 @@ The hybrid strategy improved Dice, Jaccard, HD, and MAE scores by at least 0.124
 Most methods perform well in simpler cases, like those in (b), with high segmentation accuracy. However, in more complex scenarios, ICH-HPINet outperforms other methods in terms of precision and competitiveness. For instance, in challenging cases with multiple bleeding points (a and c), our approach shows superior results. In samples with very small outliers such as (d), our method still achieves significant results.
 
 ## Interaction Experiment
+Table 5: Average results of interactive experiments
 <table align="center">
   <thead>
     <tr>
@@ -597,6 +598,69 @@ Most methods perform well in simpler cases, like those in (b), with high segment
       <td>0.0042</td>
       <td>0.0042</td>
       <td>0.0042</td>
+    </tr>
+  </tbody>
+</table>
+
+Table 6: Interaction results of some samples
+<table align="center">
+  <thead>
+    <tr>
+      <th>Number</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Dice↑</td>
+      <td>0.6133</td>
+      <td>0.7163</td>
+      <td>0.7470</td>
+      <td>0.7631</td>
+      <td>0.7720</td>
+      <td>0.7856</td>
+      <td>0.7968</td>
+      <td>0.8065</td>
+    </tr>
+    <tr>
+      <td>Jaccard↑</td>
+      <td>0.4499</td>
+      <td>0.5771</td>
+      <td>0.6169</td>
+      <td>0.6337</td>
+      <td>0.6527</td>
+      <td>0.6767</td>
+      <td>0.6983</td>
+      <td>0.7180</td>
+    </tr>
+    <tr>
+      <td>HD↓</td>
+      <td>4.50</td>
+      <td>4.10</td>
+      <td>3.90</td>
+      <td>3.76</td>
+      <td>3.64</td>
+      <td>3.50</td>
+      <td>3.36</td>
+      <td>3.26</td>
+    </tr>
+    <tr>
+      <td>MAE↓</td>
+      <td>0.0065</td>
+      <td>0.0055</td>
+      <td>0.0050</td>
+      <td>0.0047</td>
+      <td>0.0045</td>
+      <td>0.0043</td>
+      <td>0.0041</td>
+      <td>0.0039</td>
     </tr>
   </tbody>
 </table>
