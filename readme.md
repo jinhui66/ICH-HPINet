@@ -60,8 +60,8 @@ python main.py
       <td>0.3406</td>
       <td>5.17</td>
       <td>0.0145</td>
-      <td>890G</td>
-      <td>93.7M</td>
+      <td>162.35G</td>
+      <td>93.74M</td>
     </tr>
     <tr>
       <td>SAM-Med2D</td>
@@ -73,8 +73,8 @@ python main.py
       <td>0.5280</td>
       <td>4.04</td>
       <td>0.0059</td>
-      <td>922G</td>
-      <td>102.3M</td>
+      <td>198.32G</td>
+      <td>102.35M</td>
     </tr>
     <tr>
       <td>SAM2-UNet</td>
@@ -100,7 +100,7 @@ python main.py
       <td>3.62</td>
       <td>0.0035</td>
       <td>1178G</td>
-      <td>115.2M</td>
+      <td>432.2M</td>
     </tr>
     <tr>
       <td>MedSAM</td>
@@ -112,8 +112,8 @@ python main.py
       <td>0.3978</td>
       <td>5.06</td>
       <td>0.0185</td>
-      <td>910G</td>
-      <td>97.5M</td>
+      <td>365.32G</td>
+      <td>298.51M</td>
     </tr>
     <tr>
       <td>MedSAM2</td>
@@ -125,8 +125,8 @@ python main.py
       <td>0.5987</td>
       <td>4.00</td>
       <td>0.0055</td>
-      <td>1051G</td>
-      <td>108.1M</td>
+      <td>671.23G</td>
+      <td>455.62.1M</td>
     </tr>
     <tr>
       <td><strong>ICH-HPINet (Ours)</strong></td>
