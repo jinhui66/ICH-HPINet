@@ -139,7 +139,7 @@ python main.py
       <td><strong>2.96</strong></td>
       <td><strong>0.0022</strong></td>
       <td>325.32G</td>
-      <td>317.20.4M</td>
+      <td>317.24M</td>
     </tr>
   </tbody>
 </table>
