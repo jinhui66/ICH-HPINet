@@ -86,8 +86,8 @@ python main.py
       <td>0.3439</td>
       <td>3.95</td>
       <td>0.0036</td>
-      <td>851G</td>
-      <td>88.3M</td>
+      <td>215.93G</td>
+      <td>216.40M</td>
     </tr>
     <tr>
       <td>SAMIHS</td>
