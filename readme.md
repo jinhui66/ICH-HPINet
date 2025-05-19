@@ -99,7 +99,7 @@ python main.py
       <td>0.4546</td>
       <td>3.62</td>
       <td>0.0035</td>
-      <td>1178G</td>
+      <td>878.66G</td>
       <td>432.2M</td>
     </tr>
     <tr>
@@ -126,7 +126,7 @@ python main.py
       <td>4.00</td>
       <td>0.0055</td>
       <td>671.23G</td>
-      <td>455.62.1M</td>
+      <td>455.62M</td>
     </tr>
     <tr>
       <td><strong>ICH-HPINet (Ours)</strong></td>
@@ -138,8 +138,8 @@ python main.py
       <td><strong>0.6094</strong></td>
       <td><strong>2.96</strong></td>
       <td><strong>0.0022</strong></td>
-      <td>919G</td>
-      <td>107.4M</td>
+      <td>325.32G</td>
+      <td>317.20.4M</td>
     </tr>
   </tbody>
 </table>
