@@ -100,7 +100,7 @@ python main.py
       <td>3.62</td>
       <td>0.0035</td>
       <td>878.66G</td>
-      <td>432.2M</td>
+      <td>432.20M</td>
     </tr>
     <tr>
       <td>MedSAM</td>
